@@ -4,66 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebSocket Client</title>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <h1>WebSocket Client</h1>
-    <div id="messages"></div>
-    <input type="text" id="messageInput" placeholder="Type a message">
-    <button id="sendButton">Send</button>
-
-    <div>
-        <label for="slider1">Slider 1:</label>
-        <input type="range" id="slider1" min="0" max="100" value="50">
-        <span id="slider1Value">50</span>
-    </div>
-    <script>
-        const socket = new WebSocket('ws://localhost:5001');
-
-        const slider1 = document.getElementById('slider1');
-        const slider1Value = document.getElementById('slider1Value');
-        const messagesDiv = document.getElementById('messages');
-        const messageInput = document.getElementById('messageInput');
-        const sendButton = document.getElementById('sendButton');
-
-        // Update slider value display
-        slider1.addEventListener('input', () => {
-            slider1Value.textContent = slider1.value;
-            socket.send(JSON.stringify({ key: 'slider1', value: slider1.value }));
-        });
-
-        // WebSocket event listeners
-        socket.addEventListener('open', () => {
-            messagesDiv.innerHTML += '<p>Connected to WebSocket server</p>';
-        });
-
-        socket.addEventListener('message', (event) => {
-            try {
-            const data = event.data ? JSON.parse(event.data) : {};
-            console.log(data);
-            if (data.slider1 && typeof data.slider1 === 'number') {
-                slider1.value = data.slider1 * 100;
-                slider1Value.textContent = data.slider1 * 100;
-            } else {
-                messagesDiv.innerHTML += `<p>Server: ${event.data}</p>`;
-            }
-            } catch (e) {
-            console.error('Invalid message format', e);
-            }
-        });
-
-        socket.addEventListener('close', () => {
-            messagesDiv.innerHTML += '<p>Disconnected from WebSocket server</p>';
-        });
-
-        // Send message to WebSocket server
-        sendButton.addEventListener('click', () => {
-            const message = messageInput.value;
-            if (message) {
-            socket.send(message);
-            messagesDiv.innerHTML += `<p>You: ${message}</p>`;
-            messageInput.value = '';
-            }
-        });
-    </script>
+    <h1 class="websocket-title">WebSocket Client</h1>
+    <section class="connection-controls">
+        <input type="text" id="server-address" class="input" placeholder="Server address">
+        <button id="connect-button" class="btn">Connect</button>
+        <button id="disconnect-button" class="btn">Disconnect</button>
+    </section>
+    <section class="message-controls">
+        <div id="message-list" class="messages"></div>
+        <input type="text" id="message-input" class="input" placeholder="Type a message">
+        <button id="send-button" class="btn">Send</button>
+    </section>
+    <section class="slider-controls">
+        <div class="slider-container">
+            <label for="slider-1" class="slider-label">Slider 1:</label>
+            <input type="range" id="slider-1" class="slider" min="0" max="100" value="50">
+            <span id="slider-1-value" class="slider-value">50</span>
+        </div>
+    </section>
+    <script src="./js/main.js/"></script>
 </body>
 </html>
