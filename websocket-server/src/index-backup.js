@@ -2,6 +2,7 @@
 const http = require("http");
 const express = require("express");
 const WebSocket = require("ws");
+const osc = require("node-osc");
 require("dotenv").config();
 
 // Initialize Express app
@@ -14,6 +15,8 @@ const serverPort = process.env.PORT || 3000;
 // Create HTTP server
 const server = http.createServer(app);
 
+const oscClient = new osc.Client("127.0.0.1", 10000); // Default TouchDesigner OSC port
+
 // Initialize WebSocket server
 const wss =
   process.env.NODE_ENV === "production"
@@ -21,13 +24,12 @@ const wss =
     : new WebSocket.Server({ port: 5001 }); // Use standalone WebSocket server in development
 
 
-    console.log(
-      `WebSocket server is running on ${
-        process.env.NODE_ENV === "production"
-          ? `ws://localhost:${serverPort}`
-          : "ws://localhost:5001"
-      }`
-    );
+console.log(
+  `WebSocket server is running on ${process.env.NODE_ENV === "production"
+    ? `ws://localhost:${serverPort}`
+    : "ws://localhost:5001"
+  }`
+);
 // Start HTTP server
 server.listen(serverPort, () => {
   console.log(
@@ -59,6 +61,18 @@ wss.on("connection", (ws) => {
       return;
     }
 
+    // Send OSC message to TouchDesigner
+
+    // Parse the message and send it as an OSC message
+    try {
+      const oscMessage = JSON.parse(message);
+      console.log("Received OSC message:", oscMessage.value);
+      oscClient.send('/' + oscMessage.key, parseFloat(oscMessage.value));
+      console.log("OSC message sent:", oscMessage.key, oscMessage.value);
+
+    } catch (error) {
+      console.error("Error parsing OSC message:", error.message);
+    }
     // Broadcast message to other clients
     broadcast(ws, message, false);
   });

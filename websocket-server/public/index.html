@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebRTC Viewer</title>
+</head>
+<body>
+  <h2>WebRTC Stream</h2>
+  <video id="video" autoplay playsinline></video>
+
+  <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+  <script>
+    const socket = io();
+    const video = document.getElementById("video");
+
+    let peerConnection;
+    const config = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+
+    socket.emit("viewer");
+
+    socket.on("offer", async ({ sdp, from }) => {
+      peerConnection = new RTCPeerConnection(config);
+      peerConnection.setRemoteDescription(new RTCSessionDescription(sdp));
+      peerConnection.ontrack = (event) => {
+        video.srcObject = event.streams[0];
+      };
+
+      const answer = await peerConnection.createAnswer();
+      await peerConnection.setLocalDescription(answer);
+
+      socket.emit("answer", { sdp: answer, broadcasterId: from });
+    });
+
+    socket.on("candidate", ({ candidate }) => {
+      if (peerConnection) {
+        peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+      }
+    });
+  </script>
+</body>
+</html>
