@@ -7,24 +7,24 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <h1 class="websocket-title">WebSocket Client</h1>
+    <h1 class="title">WebSocket Client</h1>
     <section class="connection-controls">
-        <input type="text" id="server-address" class="input" placeholder="Server address">
-        <button id="connect-button" class="btn">Connect</button>
-        <button id="disconnect-button" class="btn">Disconnect</button>
+        <input type="text" id="server-address" class="connection-controls__input" placeholder="Server address">
+        <button id="connect-button" class="connection-controls__btn connection-controls__btn--connect">Connect</button>
+        <button id="disconnect-button" class="connection-controls__btn connection-controls__btn--disconnect">Disconnect</button>
     </section>
     <section class="message-controls">
-        <div id="message-list" class="messages"></div>
-        <input type="text" id="message-input" class="input" placeholder="Type a message">
-        <button id="send-button" class="btn">Send</button>
+        <div id="message-list" class="message-controls__list"></div>
+        <input type="text" id="message-input" class="message-controls__input" placeholder="Type a message">
+        <button id="send-button" class="message-controls__btn">Send</button>
     </section>
     <section class="slider-controls">
-        <div class="slider-container">
-            <label for="slider-1" class="slider-label">Slider 1:</label>
-            <input type="range" id="slider-1" class="slider" min="0" max="100" value="50">
-            <span id="slider-1-value" class="slider-value">50</span>
+        <div class="slider-controls__container">
+            <label for="slider-1" class="slider-controls__label">Slider 1:</label>
+            <input type="range" id="slider-1" class="slider-controls__slider" min="0" max="100" value="50">
+            <span id="slider-1-value" class="slider-controls__value">50</span>
         </div>
     </section>
-    <script src="./js/main.js/"></script>
+    <script src="./js/main.js"></script>
 </body>
 </html>
