@@ -7,24 +7,45 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <h1 class="title">WebSocket Client</h1>
-    <section class="connection-controls">
-        <input type="text" id="server-address" class="connection-controls__input" placeholder="Server address">
-        <button id="connect-button" class="connection-controls__btn connection-controls__btn--connect">Connect</button>
-        <button id="disconnect-button" class="connection-controls__btn connection-controls__btn--disconnect">Disconnect</button>
-    </section>
-    <section class="message-controls">
-        <div id="message-list" class="message-controls__list"></div>
-        <input type="text" id="message-input" class="message-controls__input" placeholder="Type a message">
-        <button id="send-button" class="message-controls__btn">Send</button>
-    </section>
-    <section class="slider-controls">
-        <div class="slider-controls__container">
-            <label for="slider-1" class="slider-controls__label">Slider 1:</label>
-            <input type="range" id="slider-1" class="slider-controls__slider" min="0" max="100" value="50">
-            <span id="slider-1-value" class="slider-controls__value">50</span>
-        </div>
-    </section>
+    <div class="container">
+        <header>
+            <h1 class="title">WebSocket Client</h1>
+        </header>
+
+        <main>
+            <section class="connection-section">
+                <h2>Connection</h2>
+                <div class="connection-controls">
+                    <input type="text" id="server-address" class="connection-controls__input" placeholder="ws://localhost:5001">
+                    <div class="connection-controls__buttons">
+                        <button id="connect-button" class="btn btn--primary">Connect</button>
+                        <button id="disconnect-button" class="btn btn--secondary">Disconnect</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="messages-section">
+                <h2>Messages</h2>
+                <div id="message-list" class="message-list"></div>
+                <div class="message-input-group">
+                    <input type="text" id="message-input" class="message-controls__input" placeholder="Type a message...">
+                    <button id="send-button" class="btn btn--primary">Send</button>
+                </div>
+            </section>
+
+            <section class="controls-section">
+                <h2>Controls</h2>
+                <div class="slider-controls">
+                    <label for="slider-1" class="slider-controls__label">Slider 1</label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="slider-1" class="slider-controls__slider" min="0" max="100" value="50">
+                        <span id="slider-1-value" class="slider-controls__value">50</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
     <script src="./js/main.js"></script>
 </body>
 </html>
