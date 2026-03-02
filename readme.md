@@ -25,6 +25,12 @@ npm install
 npm start
 ```
 
+or
+
+```bash
+npm run dev
+```
+
 ## Usage
 
 Connect to the WebSocket server and send/receive messages in real-time.
