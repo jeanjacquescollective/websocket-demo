@@ -19,8 +19,12 @@
                     <input type="text" id="server-address" class="connection-controls__input" placeholder="ws://localhost:5001">
                     <div class="connection-controls__buttons">
                         <button id="connect-button" class="btn btn--primary">Connect</button>
-                        <button id="disconnect-button" class="btn btn--secondary">Disconnect</button>
+                        <button id="disconnect-button" class="btn btn--secondary" disabled>Disconnect</button>
                     </div>
+                </div>
+                <div class="connection-state">
+                    <label for="connection-state" class="connection-state__label">State:</label>
+                    <input type="text" id="connection-state" class="connection-state__input" readonly placeholder="Disconnected">
                 </div>
             </section>
 
